@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface DoctorService {
 
-    public List<Doctor> getAllDoctors();
+    public List<Doctor> getAllDoctors() throws Exception;
 
-    public Integer addDoctor(Doctor doctor);
+    public Integer addDoctor(Doctor doctor) throws Exception;
 
-    public List<Doctor> getDoctorSortedByExperience();
+    public List<Doctor> getDoctorSortedByExperience() throws Exception;
 
     default void emptyArrayList() {
     }

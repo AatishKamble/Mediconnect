@@ -1,6 +1,6 @@
 package com.edutech.progressive.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Patient implements Comparable<Patient> {
 
