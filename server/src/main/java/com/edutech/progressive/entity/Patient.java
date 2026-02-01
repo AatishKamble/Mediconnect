@@ -78,20 +78,5 @@ public class Patient implements Comparable<Patient> {
  
     }
 
-    public Patient(String fullName, Date dateOfBirth, String contactNumber, String email, String address) {
-        this.fullName = fullName;
-        this.dateOfBirth = dateOfBirth;
-        this.contactNumber = contactNumber;
-        this.email = email;
-        this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "Patient [patientId=" + patientId + ", fullName=" + fullName + ", dateOfBirth=" + dateOfBirth
-                + ", contactNumber=" + contactNumber + ", email=" + email + ", address=" + address + "]";
-    }
-
-    
 
 }

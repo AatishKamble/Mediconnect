@@ -28,7 +28,7 @@ public class PatientDAOImpl implements PatientDAO {
     try {
       ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       ps.setString(1, patient.getFullName());
-      ps.setDate(2, (Date) patient.getDateOfBirth());
+      ps.setDate(2, new java.sql.Date(patient.getDateOfBirth().getTime()));
       ps.setString(3, patient.getContactNumber());
       ps.setString(4, patient.getEmail());
       ps.setString(5, patient.getAddress());
@@ -75,7 +75,7 @@ public class PatientDAOImpl implements PatientDAO {
     try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setString(1, patient.getFullName());
-      ps.setDate(2, (Date) patient.getDateOfBirth());
+      ps.setDate(2,  new java.sql.Date(patient.getDateOfBirth().getTime()));
       ps.setString(3, patient.getContactNumber());
       ps.setString(4, patient.getEmail());
       ps.setString(5, patient.getAddress());
