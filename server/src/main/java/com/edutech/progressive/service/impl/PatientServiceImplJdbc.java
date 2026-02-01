@@ -1,6 +1,6 @@
 package com.edutech.progressive.service.impl;
 
-import java.sql.SQLException;
+
 import java.util.Collections;
 import java.util.List;
 

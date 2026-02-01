@@ -27,5 +27,5 @@ public interface PatientService {
 
     //Do not implement these methods in PatientServiceImplArraylist.java and PatientServiceImplJdbc.java class
     //Do not implement this method until day-13
-    default public void modifyPatientDetails(PatientDTO patientDTO) { }
+    default public void modifyPatientDetails(PatientDTO patientDTO) throws Exception{ }
 }

@@ -16,17 +16,14 @@ public class DoctorDAOImpl implements DoctorDAO {
    private Connection connection;
 
    public DoctorDAOImpl() {
-      try {
+     
          this.connection = DatabaseConnectionManager.getConnection();
-      } catch (SQLException e) {
-         e.printStackTrace();
-      }
-
+     
    }
 
    @Override
-   public int addDoctor(Doctor doctor) {
-      String sql = "insert into doctor(full_name,specialty,contact_number,email,year_of_experience) values(?,?,?,?,?)";
+   public int addDoctor(Doctor doctor) throws SQLException {
+      String sql = "insert into doctor (full_name,specialty,contact_number,email,years_of_experience) values(?,?,?,?,?)";
 
       try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -44,13 +41,13 @@ public class DoctorDAOImpl implements DoctorDAO {
             }
          }
       } catch (SQLException e) {
-         e.printStackTrace();
+         throw e;
       }
       return -1;
    }
 
    @Override
-   public Doctor getDoctorById(int doctorId) {
+   public Doctor getDoctorById(int doctorId) throws SQLException {
       String sql = "select * from doctor where doctor_id=?";
 
       try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -63,14 +60,14 @@ public class DoctorDAOImpl implements DoctorDAO {
          }
 
       } catch (SQLException e) {
-         e.printStackTrace();
+         throw e;
       }
       return null;
    }
 
    @Override
-   public void updateDoctor(Doctor doctor) {
-      String sql = "update doctor set full_name=?,specialty=?,contact_number=?,email=?,year_of_experience=? where doctor_id=?";
+   public void updateDoctor(Doctor doctor)throws SQLException {
+      String sql = "update doctor set full_name=?,specialty=?,contact_number=?,email=?,years_of_experience=? where doctor_id=?";
 
       try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
@@ -84,13 +81,13 @@ public class DoctorDAOImpl implements DoctorDAO {
          ps.executeUpdate();
 
       } catch (SQLException e) {
-         e.printStackTrace();
+         throw e;
       }
 
    }
 
    @Override
-   public void deleteDoctor(int doctorId) {
+   public void deleteDoctor(int doctorId) throws SQLException {
       String sql = "delete from doctor where doctor_id=?";
 
       try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -99,13 +96,13 @@ public class DoctorDAOImpl implements DoctorDAO {
          ps.executeUpdate();
 
       } catch (SQLException e) {
-         e.printStackTrace();
+         throw e;
       }
 
    }
 
    @Override
-   public List<Doctor> getAllDoctors() {
+   public List<Doctor> getAllDoctors() throws SQLException {
       String sql = "select * from doctor";
 
       List<Doctor> doctors = new ArrayList<>();
@@ -119,7 +116,7 @@ public class DoctorDAOImpl implements DoctorDAO {
          }
 
       } catch (SQLException e) {
-         e.printStackTrace();
+        throw e;
       }
       return doctors;
    }

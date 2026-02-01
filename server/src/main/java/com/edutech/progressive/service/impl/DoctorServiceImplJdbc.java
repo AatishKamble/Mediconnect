@@ -9,7 +9,7 @@ import com.edutech.progressive.service.DoctorService;
 
 public class DoctorServiceImplJdbc  implements DoctorService{
 
-      DoctorDAO doctorDAO;
+      private DoctorDAO doctorDAO;
 
     
 
@@ -18,40 +18,69 @@ public class DoctorServiceImplJdbc  implements DoctorService{
     }
 
     @Override
-    public List<Doctor> getAllDoctors() {
+    public List<Doctor> getAllDoctors() throws Exception  {
        List<Doctor> doctors=null;
         try {
             doctors= doctorDAO.getAllDoctors();
         } catch (Exception e) {
-           e.printStackTrace();
+           throw e;
         }
      
         return doctors;
     }
 
     @Override
-    public Integer addDoctor(Doctor doctor) {
+    public Integer addDoctor(Doctor doctor) throws Exception  {
          try {
-             return doctorDAO.addDoctor(doctor);
+
+            Integer id=doctorDAO.addDoctor(doctor);
+            if(id!=null && id>0){
+                doctor.setDoctorId(id);
+            }
+             return id;
         } catch (Exception e) {
-           e.printStackTrace();
+          throw e;
         }
-        return -1;
     }
 
     @Override
-    public List<Doctor> getDoctorSortedByExperience() {
+    public List<Doctor> getDoctorSortedByExperience()throws Exception  {
         List<Doctor> doctors=null;
         try {
             doctors= doctorDAO.getAllDoctors();
              Collections.sort(doctors);
             
         } catch (Exception e) {
-           e.printStackTrace();
+           throw e;
         }
      
         return doctors;
         
     }
+
+     public void updateDoctor(Doctor doctor) throws Exception {
+        try {
+            doctorDAO.updateDoctor(doctor);;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void deleteDoctor(int doctorId) throws Exception {
+        try {
+            doctorDAO.deleteDoctor(doctorId);;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public Doctor getDoctorById(int doctorId) throws Exception{
+          try {
+          return doctorDAO.getDoctorById(doctorId);
+        } catch (Exception e) {
+        throw e;
+        }
+    }
+
 
 }

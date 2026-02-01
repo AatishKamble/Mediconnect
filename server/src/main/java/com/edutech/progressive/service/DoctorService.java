@@ -17,11 +17,11 @@ public interface DoctorService {
     }
 
     //Do not implement these methods in DoctorServiceImplArraylist.java class
-    default public void updateDoctor(Doctor doctor) { }
+    default public void updateDoctor(Doctor doctor)throws Exception { }
 
-    default public void deleteDoctor(int doctorId) { }
+    default public void deleteDoctor(int doctorId)throws Exception { }
 
-    default Doctor getDoctorById(int doctorId) { return null; }
+    default Doctor getDoctorById(int doctorId)throws Exception { return null; }
 
     //Do not implement these methods in DoctorServiceImplArraylist.java and DoctorServiceImplJdbc.java class
     // Do not implement this method until day-13

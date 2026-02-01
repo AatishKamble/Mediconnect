@@ -16,16 +16,11 @@ public class ClinicDAOImpl implements ClinicDAO {
     private Connection connection;
 
     public ClinicDAOImpl() {
-        try {
             this.connection = DatabaseConnectionManager.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override
-    public int addClinic(Clinic clinic) {
+    public int addClinic(Clinic clinic) throws SQLException {
         String sql = "insert into clinic(clinic_name,location,doctor_id,contact_number,established_year) values(?,?,?,?,?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -44,13 +39,13 @@ public class ClinicDAOImpl implements ClinicDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+           throw e;
         }
         return -1;
     }
 
     @Override
-    public Clinic getClinicById(int clinicId) {
+    public Clinic getClinicById(int clinicId) throws SQLException {
         String sql = "select * from clinic where clinic_id=?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -63,13 +58,13 @@ public class ClinicDAOImpl implements ClinicDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           throw e;
         }
         return null;
     }
 
     @Override
-    public void updateClinic(Clinic clinic) {
+    public void updateClinic(Clinic clinic)throws SQLException {
         String sql = "update clinic set clinic_name=?,location=?,doctor_id=?,contact_number=?,established_year=? where clinic_id=?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -84,12 +79,12 @@ public class ClinicDAOImpl implements ClinicDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           throw e;
         }
     }
 
     @Override
-    public void deleteClinic(int clinicId) {
+    public void deleteClinic(int clinicId) throws SQLException {
         String sql = "delete from clinic where clinic_id=?";
 
       try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -98,12 +93,12 @@ public class ClinicDAOImpl implements ClinicDAO {
          ps.executeUpdate();
 
       } catch (SQLException e) {
-         e.printStackTrace();
+        throw e;
       }
     }
 
     @Override
-    public List<Clinic> getAllClinics() {
+    public List<Clinic> getAllClinics() throws SQLException {
         String sql = "select * from clinic";
 
       List<Clinic> clinics = new ArrayList<>();
@@ -117,7 +112,7 @@ public class ClinicDAOImpl implements ClinicDAO {
          }
 
       } catch (SQLException e) {
-         e.printStackTrace();
+        throw e;
       }
       return clinics;
     }

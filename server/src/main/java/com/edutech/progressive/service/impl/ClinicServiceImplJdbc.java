@@ -10,62 +10,60 @@ import com.edutech.progressive.service.ClinicService;
 public class ClinicServiceImplJdbc implements ClinicService {
 
 
-     ClinicDAO clinicDAO;
+    private ClinicDAO clinicDAO;
 
-    
-
-    public ClinicServiceImplJdbc( ClinicDAO clinicDAO) {
+    public ClinicServiceImplJdbc(ClinicDAO clinicDAO) {
         this.clinicDAO = clinicDAO;
     }
 
     @Override
-    public List<Clinic> getAllClinics() {
+    public List<Clinic> getAllClinics() throws Exception {
        List<Clinic> clinics=null;
         try {
             clinics= clinicDAO.getAllClinics();
         } catch (Exception e) {
-           e.printStackTrace();
+           throw e;
         }
      
         return clinics;
     }
 
     @Override
-    public Clinic getClinicById(int clinicId) {
+    public Clinic getClinicById(int clinicId)throws Exception  {
        try {
              return  clinicDAO.getClinicById(clinicId);
         } catch (Exception e) {
-           e.printStackTrace();
+           throw e;
         }
-      return null;
+      
     }
 
     @Override
-    public Integer addClinic(Clinic clinic) {
+    public Integer addClinic(Clinic clinic)throws Exception  {
        try {
              return clinicDAO.addClinic(clinic);
         } catch (Exception e) {
-           e.printStackTrace();
+          throw e;
         }
-        return -1;
+      
     }
 
     @Override
-    public void updateClinic(Clinic clinic) {
+    public void updateClinic(Clinic clinic) throws Exception  {
        try {
             clinicDAO.updateClinic(clinic);
         } catch (Exception e) {
-           e.printStackTrace();
+           throw e;
         }
        
     }
 
     @Override
-    public void deleteClinic(int clinicId) {
+    public void deleteClinic(int clinicId)throws Exception  {
          try {
             clinicDAO.deleteClinic(clinicId);
         } catch (Exception e) {
-           e.printStackTrace();
+          throw e;
         }
     }
 

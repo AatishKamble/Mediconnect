@@ -10,18 +10,29 @@ import java.util.Properties;
 
 public class DatabaseConnectionManager {
 
-    private static final Properties properties= new Properties();
+    private static final Properties properties = new Properties();
 
-    private static void loadProperties() throws IOException{
-        properties.load(new FileInputStream("/home/coder/app/server/src/main/resources/application.properties"));
-    }
-    public static Connection getConnection() throws SQLException{
+    private static void loadProperties() {
         try {
-            loadProperties();
+            properties.load(new FileInputStream("/home/coder/app/server/src/main/resources/application.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-            return DriverManager.getConnection(properties.getProperty("spring.datasource.url"), properties.getProperty("spring.datasource.username"), properties.getProperty("spring.datasource.password"));
+    }
+
+    public static Connection getConnection() {
+        Connection connection = null;
+        try {
+            loadProperties();
+            connection = DriverManager.getConnection(properties.getProperty("spring.datasource.url"),
+                    properties.getProperty("spring.datasource.username"),
+                    properties.getProperty("spring.datasource.password"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return connection;
     }
 
 }
