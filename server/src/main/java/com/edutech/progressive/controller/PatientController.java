@@ -1,10 +1,13 @@
 package com.edutech.progressive.controller;
 
 import com.edutech.progressive.entity.Patient;
+import com.edutech.progressive.exception.PatientNotFoundException;
 import com.edutech.progressive.service.PatientService;
 import com.edutech.progressive.service.impl.PatientServiceImplArraylist;
+import com.edutech.progressive.service.impl.PatientServiceImplJpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,10 +26,13 @@ import java.util.List;
 public class PatientController {
 
     @Autowired
+    @Qualifier("patientServiceImplJpa")
     PatientService patientService;
 
     @Autowired
     PatientServiceImplArraylist patientServiceImplArraylist;
+    
+   
 
     @GetMapping
     public ResponseEntity<List<Patient>> getAllPatients() throws Exception {
@@ -46,14 +52,32 @@ public class PatientController {
     }
 
     @PutMapping("/{patientId}")
-    public ResponseEntity<Void> updatePatient(@PathVariable int patientId,@RequestBody Patient patient) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    public ResponseEntity<Void> updatePatient(@PathVariable int patientId,@RequestBody Patient patient)  {
+       
+       try {
+          patient.setPatientId(patientId);
+        patientService.updatePatient(patient);
+        return new ResponseEntity<>(HttpStatus.OK);
+       } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+       }
+      
 
     }
 
     @DeleteMapping("/{patientId}")
     public ResponseEntity<Void> deletePatient(@PathVariable int patientId) {
-          return ResponseEntity.status(HttpStatus.OK).body(null);
+        try {
+             patientService.deletePatient(patientId);
+          return ResponseEntity.noContent().build();
+        } 
+        catch(PatientNotFoundException pn){
+ return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+       
     }
 
     @GetMapping("/fromArrayList")
